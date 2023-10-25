@@ -2,7 +2,7 @@
 using UnityEngine;
 
 public class EditorTools {
-    [MenuItem("TankSurvival/Select Camera")]
+    [MenuItem("TankSurSelectCameravival/Select Camera")]
     static void SelectCamera() {
         Selection.activeGameObject = Camera.main.gameObject;
     }
