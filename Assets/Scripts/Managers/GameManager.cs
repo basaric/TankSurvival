@@ -13,13 +13,11 @@ namespace Complete {
         public GameObject m_TankPrefab;             // Reference to the prefab the players will control.
         public TankManager[] m_Tanks;               // A collection of managers for enabling and disabling different aspects of the tanks.
 
-
         private int m_RoundNumber;                  // Which round the game is currently on.
         private WaitForSeconds m_StartWait;         // Used to have a delay whilst the round starts.
         private WaitForSeconds m_EndWait;           // Used to have a delay whilst the round or game ends.
         private TankManager m_RoundWinner;          // Reference to the winner of the current round.  Used to make an announcement of who won.
         private TankManager m_GameWinner;           // Reference to the winner of the game.  Used to make an announcement of who won.
-
 
         private void Start() {
             m_StartWait = new WaitForSeconds(m_StartDelay);
@@ -31,7 +29,6 @@ namespace Complete {
             StartCoroutine(GameLoop());
         }
 
-
         private void SpawnAllTanks() {
             for (int i = 0; i < m_Tanks.Length; i++) {
                 m_Tanks[i].m_Instance =
@@ -40,7 +37,6 @@ namespace Complete {
                 m_Tanks[i].Setup();
             }
         }
-
 
         private void SetCameraTargets() {
             Transform[] targets = new Transform[m_Tanks.Length];
@@ -51,7 +47,6 @@ namespace Complete {
 
             m_CameraControl.m_Targets = targets;
         }
-
 
         private IEnumerator GameLoop() {
             yield return StartCoroutine(RoundStarting());
@@ -68,7 +63,6 @@ namespace Complete {
             }
         }
 
-
         private IEnumerator RoundStarting() {
             ResetAllTanks();
             DisableTankControl();
@@ -80,7 +74,6 @@ namespace Complete {
 
             yield return m_StartWait;
         }
-
 
         private IEnumerator RoundPlaying() {
             EnableTankControl();
