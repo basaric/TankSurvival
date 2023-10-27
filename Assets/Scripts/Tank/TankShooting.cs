@@ -62,6 +62,7 @@ namespace Complete {
                 Instantiate(m_Shell, m_FireTransform.position, m_FireTransform.rotation) as Rigidbody;
 
             shellInstance.velocity = m_CurrentLaunchForce * m_FireTransform.forward;
+            shellInstance.velocity = m_MaxLaunchForce * m_FireTransform.forward;
 
             m_ShootingAudio.clip = m_FireClip;
             m_ShootingAudio.Play();

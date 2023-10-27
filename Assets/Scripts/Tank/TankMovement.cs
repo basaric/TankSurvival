@@ -85,7 +85,7 @@ namespace Complete {
                 newRotation.x = 0;
                 newRotation.z = 0;
                 float _lerpSpeed = 0.3f + (Vector3.Dot(transform.forward, XZVelocity.normalized) - 1f) * 0.5f * 0.2f;
-                transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, lerpSpeed);
+                transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, _lerpSpeed);
             }
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);

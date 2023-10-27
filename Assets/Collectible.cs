@@ -1,18 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 
-public class Collectible : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+public class Collectible : MonoBehaviour {
+    private void OnTriggerEnter(Collider other) {
+        if (other.CompareTag("Player")) {
+            //play sound
+            Destroy(gameObject);
+        }
     }
 }
