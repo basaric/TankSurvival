@@ -11,6 +11,7 @@ namespace Complete {
         public AudioClip m_ChargingClip;
         public AudioClip m_FireClip;
         public float m_MaxLaunchForce = 30f;
+        public Camera hudCamera;
 
         private void Update() {
             //m_AimSlider.value = m_MinLaunchForce;
@@ -36,7 +37,10 @@ namespace Complete {
                 Fire();
             }
 
-            crosshair.transform.position = Input.mousePosition;
+            
+            Vector3 crosshairPosition = Input.mousePosition;
+            //crosshairPosition.z = hudCamera.nearClipPlane;
+            crosshair.transform.position = hudCamera.ScreenToWorldPoint(crosshairPosition);
             Cursor.visible = false;
         }
 
