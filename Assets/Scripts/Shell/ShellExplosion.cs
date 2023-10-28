@@ -5,30 +5,40 @@ namespace Complete {
         public LayerMask m_TankMask;
         public ParticleSystem m_ExplosionParticles;
         public AudioSource m_ExplosionAudio;
-        public float m_MaxDamage = 100f;
+        public float damageMultiplier = 100f;
         public float m_ExplosionForce = 1000f;
         public float m_MaxLifeTime = 2f;
         public float m_ExplosionRadius = 5f;
-
+        public GameObject owner;
 
         private void Start() {
             Destroy(gameObject, m_MaxLifeTime);
         }
 
-
         private void OnTriggerEnter(Collider other) {
+            /*
             Collider[] colliders = Physics.OverlapSphere(transform.position, m_ExplosionRadius, m_TankMask);
-            for (int i = 0; i < colliders.Length; i++) {
-                Rigidbody targetRigidbody = colliders[i].GetComponent<Rigidbody>();
-                if (!targetRigidbody)
-                    continue;
-                targetRigidbody.AddExplosionForce(m_ExplosionForce, transform.position, m_ExplosionRadius);
-                TankHealth targetHealth = targetRigidbody.GetComponent<TankHealth>();
-                if (!targetHealth)
-                    continue;
+            for (int i = 0; i < colliders.Length; i++) 
+            }
+            */
+            
+            Rigidbody targetRigidbody = other.GetComponent<Rigidbody>();
+            if (targetRigidbody) {
+                //targetRigidbody.AddExplosionForce(m_ExplosionForce, transform.position, m_ExplosionRadius);
+            }
+                    
+            TankHealth targetHealth = other.GetComponent<TankHealth>();
+            if (targetHealth) {
                 float damage = CalculateDamage(targetRigidbody.position);
                 targetHealth.TakeDamage(damage);
             }
+
+            Destroyable destroyable = other.GetComponent<Destroyable>();
+            if (destroyable) {
+                destroyable.destroy();
+            }
+
+            
             m_ExplosionParticles.transform.parent = null;
             m_ExplosionParticles.Play();
             m_ExplosionAudio.Play();
@@ -37,12 +47,11 @@ namespace Complete {
             Destroy(gameObject);
         }
 
-
         private float CalculateDamage(Vector3 targetPosition) {
             Vector3 explosionToTarget = targetPosition - transform.position;
             float explosionDistance = explosionToTarget.magnitude;
             float relativeDistance = (m_ExplosionRadius - explosionDistance) / m_ExplosionRadius;
-            float damage = relativeDistance * m_MaxDamage;
+            float damage = relativeDistance * damageMultiplier;
             damage = Mathf.Max(0f, damage);
 
             return damage;
