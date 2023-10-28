@@ -12,8 +12,6 @@ namespace Complete {
         public AudioClip m_FireClip;
         public float m_MaxLaunchForce = 30f;
 
-        private string m_FireButton = "Fire1";
-
         private void Update() {
             //m_AimSlider.value = m_MinLaunchForce;
 
