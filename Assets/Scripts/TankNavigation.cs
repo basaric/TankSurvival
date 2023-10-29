@@ -7,18 +7,19 @@ public class TankNavigation : MonoBehaviour
 {
     public Camera playerCamera;
     public NavMeshAgent agent;
+    private GameObject player;
+
+    private void Start() {
+        player = GameObject.FindWithTag("Player");
+    }
 
     void Update()
     {
-        if (Input.GetMouseButton(0) ) {
-            Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit)) {
-                agent.isStopped = false;
-                agent.SetDestination(hit.point);
-            }
-        } else {
-            agent.isStopped = true;
+        NavMeshHit navHit;
+        if (NavMesh.SamplePosition(player.transform.position, out navHit, 1.0f, NavMesh.AllAreas)) {
+            Vector3 nearestPoint = navHit.position;
+            agent.isStopped = false;
+            agent.SetDestination(nearestPoint);
         }
     }
 }
