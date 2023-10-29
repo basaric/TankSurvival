@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 
 namespace Complete {
-    public class TankShooting : MonoBehaviour {
+    public class TankWeapon : MonoBehaviour {
         public GameObject m_Shell;
         public Transform m_FireTransform;
         public AudioSource m_ShootingAudio;

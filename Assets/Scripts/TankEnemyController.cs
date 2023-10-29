@@ -7,26 +7,29 @@ using UnityEngine.AI;
 
 public class TankEnemyController : MonoBehaviour
 {
-    public float shootInterval = 5f;
+    public float shootInterval = 3f;
+    public float moveInterval = 5f;
+    public float radius = 20f;
 
     private NavMeshAgent agent;
     private GameObject player;
     private TankMovement tankMovement;
-    private TankShooting tankShooting;
+    private TankWeapon tankWeapon;
 
     void Awake() {
         agent = GetComponent<NavMeshAgent>();
         tankMovement = GetComponent<TankMovement>();
-        tankShooting = GetComponent<TankShooting>();
+        tankWeapon = GetComponent<TankWeapon>();
     }
-
     private void Start() {
         player = GameObject.FindWithTag("Player");
-        //InvokeRepeating("shootTimer", 0.0f, shootInterval);
+        InvokeRepeating("shootTimer", 0.0f, shootInterval);
+        InvokeRepeating("moveTimer", 0.0f, shootInterval);
     }
     void Update() {
-        //goToPosition(player.transform.position);
-        tankMovement.aimAt(player.transform.position);
+        if (player != null) {
+            tankMovement.aimAt(player.transform.position);
+        }
     }
     private void goToPosition(Vector3 position) {
         NavMeshHit navHit;
@@ -37,6 +40,15 @@ public class TankEnemyController : MonoBehaviour
         }
     }
     private void shootTimer() {
-        tankShooting.Fire();
+        tankWeapon.Fire();
+    }
+    private void moveTimer() {
+        if (player != null) {
+            Vector3 offset = UnityEngine.Random.onUnitSphere;
+            offset.y = 0;
+            offset = offset.normalized * radius;
+
+            goToPosition(player.transform.position + offset);
+        }
     }
 }

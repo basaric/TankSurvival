@@ -15,13 +15,13 @@ public class TankPlayerController : MonoBehaviour
     private Camera cameraHUD;
 
     private TankMovement tankMovement;
-    private TankShooting tankShooting;
+    private TankWeapon tankWeapon;
 
     private void Awake() {
         cameraMain = Camera.main;
         cameraHUD = GameObject.FindWithTag("hudCamera").GetComponent<Camera>();
         tankMovement = gameObject.GetComponent<TankMovement>();
-        tankShooting = gameObject.GetComponent<TankShooting>();
+        tankWeapon = gameObject.GetComponent<TankWeapon>();
     }
 
     void Update() {
@@ -33,7 +33,12 @@ public class TankPlayerController : MonoBehaviour
         Cursor.visible = false;
 
         if (Input.GetMouseButtonDown(0)) {
-            tankShooting.Fire();
+            tankWeapon.Fire();
+        }
+        Ray ray = cameraMain.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit)) {
+            tankMovement.aimAt(hit.point);
         }
     }
 
@@ -41,11 +46,5 @@ public class TankPlayerController : MonoBehaviour
         Vector3 moveInput = cameraMain.transform.forward * movementInput.x + cameraMain.transform.right * movementInput.y;
         moveInput.y = 0;
         tankMovement.onMoveInput(moveInput);
-
-        Ray ray = cameraMain.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit)) {
-            tankMovement.aimAt(hit.point);
-        }
     }
 }
