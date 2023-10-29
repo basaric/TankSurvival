@@ -44,10 +44,11 @@ namespace Complete {
         private void Update() {
             EngineAudio();
         }
-
+        private void FixedUpdate() {
+            orientToMovement();
+        }
         public void onMoveInput(Vector3 input) {
             m_Rigidbody.AddForce(input.normalized * movementStrength);
-            orientToMovement();
         }
         public void aimAt(Vector3 point) {
             Vector3 aimDirection = (point - transform.position).normalized;

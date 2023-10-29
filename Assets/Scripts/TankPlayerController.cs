@@ -11,10 +11,11 @@ public class TankPlayerController : MonoBehaviour
     public Image crosshair;
 
     private Vector3 movementInput = Vector3.zero;
-    private TankMovement tankMovement;
-    private TankShooting tankShooting;
     private Camera cameraMain;
     private Camera cameraHUD;
+
+    private TankMovement tankMovement;
+    private TankShooting tankShooting;
 
     private void Awake() {
         cameraMain = Camera.main;
@@ -38,11 +39,10 @@ public class TankPlayerController : MonoBehaviour
 
     private void FixedUpdate() {
         Vector3 moveInput = cameraMain.transform.forward * movementInput.x + cameraMain.transform.right * movementInput.y;
-        //moveInput.y = 0;
-        //moveInput.Normalize();
+        moveInput.y = 0;
         tankMovement.onMoveInput(moveInput);
 
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Ray ray = cameraMain.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit)) {
             tankMovement.aimAt(hit.point);
