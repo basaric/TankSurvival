@@ -24,19 +24,22 @@ public class TankEnemyController : MonoBehaviour
     private void Start() {
         player = GameObject.FindWithTag("Player");
         InvokeRepeating("shootTimer", 0.0f, shootInterval);
-        InvokeRepeating("moveTimer", 0.0f, shootInterval);
+        InvokeRepeating("moveTimer", 0.0f, moveInterval);
     }
     void Update() {
-        if (player != null) {
-            tankMovement.aimAt(player.transform.position);
+        if (agent.remainingDistance <= agent.stoppingDistance + 0.5f) {
+            if (player != null) {
+                tankMovement.aimAt(player.transform.position);
+            }
+        } else {
+            tankMovement.aimAt(agent.destination);
         }
     }
     private void goToPosition(Vector3 position) {
         NavMeshHit navHit;
         if (NavMesh.SamplePosition(position, out navHit, 1.0f, NavMesh.AllAreas)) {
-            Vector3 nearestPoint = navHit.position;
             agent.isStopped = false;
-            agent.SetDestination(nearestPoint);
+            agent.SetDestination(navHit.position);
         }
     }
     private void shootTimer() {
@@ -44,11 +47,13 @@ public class TankEnemyController : MonoBehaviour
     }
     private void moveTimer() {
         if (player != null) {
-            Vector3 offset = UnityEngine.Random.onUnitSphere;
-            offset.y = 0;
-            offset = offset.normalized * radius;
-
-            goToPosition(player.transform.position + offset);
+            goToPosition(getRandomOffset(player.transform.position, radius));
         }
+    }
+    private Vector3 getRandomOffset(Vector3 position, float radius) {
+        Vector3 offset = UnityEngine.Random.onUnitSphere;
+        offset.y = 0;
+        offset = offset.normalized * radius;
+        return position + offset;
     }
 }

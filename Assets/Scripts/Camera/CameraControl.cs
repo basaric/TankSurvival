@@ -16,6 +16,7 @@ namespace Complete {
         }
         void Start() {
             player = GameObject.FindWithTag("Player");
+            transform.position = player.transform.position;
         }
         private void FixedUpdate() {
             if (player != null) {
