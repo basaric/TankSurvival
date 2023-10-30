@@ -20,22 +20,37 @@ public class TankEnemyController : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         tankMovement = GetComponent<TankMovement>();
         tankWeapon = GetComponent<TankWeapon>();
+
+        //agent.updatePosition = false;
+        //agent.updateRotation = false;
     }
     private void Start() {
         player = GameObject.FindWithTag("Player");
         InvokeRepeating("shootTimer", 0.0f, shootInterval);
         InvokeRepeating("moveTimer", 0.0f, moveInterval);
     }
-    void Update() {
-        if (agent.remainingDistance <= agent.stoppingDistance + 0.5f) {
+
+    private void FixedUpdate() {
+        if (agent.isStopped == false) {
+            //agent.nextPosition = transform.position;
+            //tankMovement.onMoveInput(agent.desiredVelocity.normalized);
+            //tankMovement.onMoveInputScaled(agent.desiredVelocity);
+        }
+        aim();
+    }
+    private void aim() {
+        tankMovement.aimAt(player.transform.position);
+        
+        /*if (agent.isStopped) {
             if (player != null) {
                 tankMovement.aimAt(player.transform.position);
             }
-        } else {
-            tankMovement.aimAt(agent.destination);
         }
+        else {
+            tankMovement.aimAt(agent.destination);
+        }*/
     }
-    private void goToPosition(Vector3 position) {
+    private void setDestination(Vector3 position) {
         NavMeshHit navHit;
         if (NavMesh.SamplePosition(position, out navHit, 1.0f, NavMesh.AllAreas)) {
             agent.isStopped = false;
@@ -47,7 +62,7 @@ public class TankEnemyController : MonoBehaviour
     }
     private void moveTimer() {
         if (player != null) {
-            goToPosition(getRandomOffset(player.transform.position, radius));
+            setDestination(getRandomOffset(player.transform.position, radius));
         }
     }
     private Vector3 getRandomOffset(Vector3 position, float radius) {

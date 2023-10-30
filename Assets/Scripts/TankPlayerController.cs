@@ -27,6 +27,9 @@ public class TankPlayerController : MonoBehaviour
         if (Input.GetMouseButtonDown(0)) {
             tankWeapon.Fire();
         }
+        if (Input.GetMouseButtonDown(1)) {
+            //GetComponent<TankHealth>().kill();
+        }
 
         Ray ray = cameraMain.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;

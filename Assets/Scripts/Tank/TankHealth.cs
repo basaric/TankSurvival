@@ -3,43 +3,43 @@ using UnityEngine.UI;
 
 namespace Complete {
     public class TankHealth : MonoBehaviour {
-        public float m_StartingHealth = 100f;
-        public Slider m_Slider;
-        public GameObject m_ExplosionPrefab;
-        public float m_CurrentHealth;
+        public float startHealth = 100f;
+        public GameObject explosionPrefab;
         public Vector3 positionOffset = new Vector3(0, 50, 0);
+        public Slider slider;
 
-        private Camera targetCamera;
-        private AudioSource m_ExplosionAudio;
-        private ParticleSystem m_ExplosionParticles;
-
+        private float health;
+        private Camera mainCamera;
+        
         private void Awake() {
-            m_Slider.gameObject.transform.parent.gameObject.SetActive(true);
-        }
-        private void FixedUpdate() {
-            Vector3 newPosition = targetCamera.WorldToScreenPoint(gameObject.transform.position) + positionOffset;
-            m_Slider.transform.position = newPosition;
+            slider.gameObject.transform.parent.gameObject.SetActive(true);
         }
         private void OnEnable() {
-            targetCamera = Camera.main;
-            m_CurrentHealth = m_StartingHealth;
-            SetHealthUI();
+            mainCamera = Camera.main;
+            health = startHealth;
+            refreshGUI();
+        }
+        private void FixedUpdate() {
+            Vector3 newPosition = mainCamera.WorldToScreenPoint(gameObject.transform.position) + positionOffset;
+            slider.transform.position = newPosition;
         }
         public void TakeDamage(float amount) {
-            m_CurrentHealth -= amount;
-            SetHealthUI();
-            if (m_CurrentHealth <= 0f) {
-                OnDeath();
+            health -= amount;
+            refreshGUI();
+            if (health <= 0f) {
+                kill();
             }
         }
-        private void SetHealthUI() {
-            m_Slider.value = m_CurrentHealth;
+        private void refreshGUI() {
+            slider.value = health;
         }
-        private void OnDeath() {
-            m_ExplosionParticles = Instantiate(m_ExplosionPrefab, transform).GetComponent<ParticleSystem>();
-            m_ExplosionParticles.Play();
-            m_ExplosionParticles.GetComponent<AudioSource>().Play();
+        public void kill() {
+            ParticleSystem explosion = Instantiate(explosionPrefab).GetComponent<ParticleSystem>();
+            explosion.transform.position = transform.position;
+            explosion.Play();
+            explosion.GetComponent<AudioSource>().Play();
             Destroy(gameObject);
+            Destroy(explosion,  3f);
         }
     }
 }
