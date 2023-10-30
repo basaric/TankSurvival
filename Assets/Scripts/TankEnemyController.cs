@@ -2,6 +2,7 @@ using Complete;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Services.Analytics.Internal;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -10,6 +11,10 @@ public class TankEnemyController : MonoBehaviour
     public float shootInterval = 3f;
     public float moveInterval = 5f;
     public float radius = 20f;
+
+    public bool agentUpdatePosition = false;
+    public bool agentUpdateRotation = false;
+    public bool agentCustomMovement = true;
 
     private NavMeshAgent agent;
     private GameObject player;
@@ -21,8 +26,8 @@ public class TankEnemyController : MonoBehaviour
         tankMovement = GetComponent<TankMovement>();
         tankWeapon = GetComponent<TankWeapon>();
 
-        //agent.updatePosition = false;
-        //agent.updateRotation = false;
+        agent.updatePosition = agentUpdatePosition;
+        agent.updateRotation = agentUpdateRotation;
     }
     private void Start() {
         player = GameObject.FindWithTag("Player");
@@ -31,10 +36,10 @@ public class TankEnemyController : MonoBehaviour
     }
 
     private void FixedUpdate() {
-        if (agent.isStopped == false) {
-            //agent.nextPosition = transform.position;
+        if (!agent.isStopped && agentCustomMovement) {
+            agent.nextPosition = transform.position;
             //tankMovement.onMoveInput(agent.desiredVelocity.normalized);
-            //tankMovement.onMoveInputScaled(agent.desiredVelocity);
+            tankMovement.onMoveInputScaled(agent.desiredVelocity);
         }
         aim();
     }

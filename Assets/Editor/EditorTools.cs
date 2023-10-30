@@ -1,9 +1,12 @@
-﻿using UnityEditor;
+﻿using Unity.AI.Navigation;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EditorTools {
-    [MenuItem("TankSurvival/Select Camera")]
-    static void SelectCamera() {
-        Selection.activeGameObject = Camera.main.gameObject;
+    [MenuItem("TankSurvival/Bake Navigation")]
+    static void BakeNavigation() {
+        NavMeshSurface navMesh = GameObject.FindWithTag("Navigation").GetComponent<NavMeshSurface>();
+        navMesh.BuildNavMesh();
     }
 }

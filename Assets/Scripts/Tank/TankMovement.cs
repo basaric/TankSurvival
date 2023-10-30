@@ -5,9 +5,9 @@ using UnityEngine;
 namespace Complete {
     public class TankMovement : MonoBehaviour {
         public float maxVelocity = 5f;
+        public float torqueStrength = 5f;
         public float inputScaledMaxMagnitude = 1f;
         public float movementStrength = 50f;
-        public float aimLerpStrength = 1f;
         public float enginePitchRange = 0.2f;
 
         public AudioSource m_MovementAudio;
@@ -42,27 +42,19 @@ namespace Complete {
             Quaternion newRotation = Quaternion.LookRotation(aimDirection, Vector3.up);
             newRotation.x = 0;
             newRotation.z = 0;
-            newRotation = Quaternion.Lerp(turretTransform.transform.rotation, newRotation, aimLerpStrength);
             turretTransform.transform.rotation = newRotation;
         }
         public void orientToMovement() {
             Vector3 XZVelocity = rigidBody.velocity;
             XZVelocity.y = 0;
-            float previousRotationY = transform.rotation.y;
             if (XZVelocity.magnitude > 0.05f) {
                 Quaternion newRotation = Quaternion.LookRotation(XZVelocity.normalized, Vector3.up);
                 newRotation.x = 0;
                 newRotation.z = 0;
-                float _lerpSpeed = 0.3f + (Vector3.Dot(transform.forward, XZVelocity.normalized) - 1f) * 0.5f * 0.2f;
-                //transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, _lerpSpeed);
+                float lerpSpeed = 0.3f + (Vector3.Dot(transform.forward, XZVelocity.normalized) - 1f) * 0.5f * 0.2f;
+                //transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, lerpSpeed);
+                rigidBody.AddTorque(Vector3.Cross(transform.forward, XZVelocity.normalized) * torqueStrength);
             }
-
-            /*
-            float rotationOffset = transform.rotation.y - previousRotationY;
-            Quaternion newTurretRotation = turretTransform.rotation;
-            newTurretRotation.y -= rotationOffset;
-            turretTransform.rotation = newTurretRotation;
-            */
         }
         private void EngineAudio() {
             if (rigidBody.velocity.magnitude < 0.1f) {
