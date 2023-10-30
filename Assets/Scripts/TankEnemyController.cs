@@ -12,14 +12,28 @@ public class TankEnemyController : MonoBehaviour
     public float moveInterval = 5f;
     public float radius = 20f;
 
-    public bool agentUpdatePosition = false;
-    public bool agentUpdateRotation = false;
+    private bool agentUpdatePosition = false;
+    private bool agentUpdateRotation = false;
     public bool agentCustomMovement = true;
 
     private NavMeshAgent agent;
     private GameObject player;
     private TankMovement tankMovement;
     private TankWeapon tankWeapon;
+
+    public bool AgentUpdatePosition {
+        get { return agent.updatePosition; }
+        set {
+            agent.updatePosition = value;
+        }
+    }
+
+    public bool AgentUpdateRotation {
+        get { return agent.updateRotation; }
+        set {
+            agent.updateRotation = value;
+        }
+    }
 
     void Awake() {
         agent = GetComponent<NavMeshAgent>();
@@ -34,12 +48,10 @@ public class TankEnemyController : MonoBehaviour
         InvokeRepeating("shootTimer", 0.0f, shootInterval);
         InvokeRepeating("moveTimer", 0.0f, moveInterval);
     }
-
     private void FixedUpdate() {
         if (!agent.isStopped && agentCustomMovement) {
             agent.nextPosition = transform.position;
-            //tankMovement.onMoveInput(agent.desiredVelocity.normalized);
-            tankMovement.onMoveInputScaled(agent.desiredVelocity);
+            tankMovement.onMoveInput(agent.desiredVelocity);
         }
         aim();
     }

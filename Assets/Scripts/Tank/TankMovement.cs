@@ -6,7 +6,7 @@ namespace Complete {
     public class TankMovement : MonoBehaviour {
         public float maxVelocity = 5f;
         public float torqueStrength = 5f;
-        public float inputScaledMaxMagnitude = 1f;
+        public float inputMaxMagnitude = 1f;
         public float movementStrength = 50f;
         public float enginePitchRange = 0.2f;
 
@@ -32,10 +32,7 @@ namespace Complete {
             orientToMovement();
         }
         public void onMoveInput(Vector3 input) {
-            rigidBody.AddForce(input.normalized * movementStrength);
-        }
-        public void onMoveInputScaled(Vector3 input) {
-            rigidBody.AddForce(Vector3.ClampMagnitude(input, inputScaledMaxMagnitude) * movementStrength);
+            rigidBody.AddForce(Vector3.ClampMagnitude(input, inputMaxMagnitude) * movementStrength);
         }
         public void aimAt(Vector3 point) {
             Vector3 aimDirection = (point - transform.position).normalized;

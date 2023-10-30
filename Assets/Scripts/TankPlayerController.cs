@@ -19,7 +19,6 @@ public class TankPlayerController : MonoBehaviour
         tankWeapon = gameObject.GetComponent<TankWeapon>();
         Cursor.visible = false;
     }
-
     void Update() {
         movementInput.x = Input.GetAxis(horizontalAxisName);
         movementInput.y = Input.GetAxis(verticalAxisName);
@@ -29,6 +28,7 @@ public class TankPlayerController : MonoBehaviour
         }
         if (Input.GetMouseButtonDown(1)) {
             //GetComponent<TankHealth>().kill();
+            StartCoroutine(Shake(0.15f, 1f));
         }
 
         Ray ray = cameraMain.ScreenPointToRay(Input.mousePosition);
@@ -37,10 +37,23 @@ public class TankPlayerController : MonoBehaviour
             tankMovement.aimAt(hit.point);
         }
     }
-
     private void FixedUpdate() {
         Vector3 moveInput = cameraMain.transform.forward * movementInput.x + cameraMain.transform.right * movementInput.y;
         moveInput.y = 0;
-        tankMovement.onMoveInput(moveInput);
+        tankMovement.onMoveInput(moveInput.normalized);
+    }
+    public IEnumerator Shake(float duration, float magnitude) {
+        Vector3 startPosition = cameraMain.transform.localPosition;
+        float elapsed = 0f;
+        while (elapsed < duration) {
+            cameraMain.transform.localPosition = new Vector3(
+                Random.Range(-magnitude, magnitude),
+                Random.Range(-magnitude, magnitude),
+                startPosition.z
+            );
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        cameraMain.transform.localPosition = startPosition;
     }
 }
