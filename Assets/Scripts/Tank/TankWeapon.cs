@@ -2,12 +2,15 @@
 
 namespace Complete {
     public class TankWeapon : MonoBehaviour {
-        public GameObject m_Shell;
+        [Header("Tank")]
         public Transform m_FireTransform;
         public AudioSource m_ShootingAudio;
+
+        [Header("Weapon")]
+        public GameObject m_Shell;
         public AudioClip m_FireClip;
         public float m_MaxLaunchForce = 30f;
-        public float recoilStrength = 1000f;
+        public float recoilStrength = 200f;
 
         public void Fire() {
             GameObject shellInstance = Instantiate(m_Shell, m_FireTransform.position, m_FireTransform.rotation) as GameObject;

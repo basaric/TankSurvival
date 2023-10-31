@@ -4,19 +4,21 @@ using UnityEngine;
 
 namespace Complete {
     public class TankMovement : MonoBehaviour {
+        [Header("Movement")]
         public float maxVelocity = 5f;
         public float torqueStrength = 5f;
         public float inputMaxMagnitude = 1f;
         public float movementStrength = 50f;
-        public float enginePitchRange = 0.2f;
-
-        public AudioSource m_MovementAudio;
         public AudioClip m_EngineIdling;
         public AudioClip m_EngineDriving;
+
+        [Header("References")]
+        public AudioSource m_MovementAudio;
         public Transform turretTransform;
 
         private Rigidbody rigidBody;
         private float enginePitch;
+        private float enginePitchRange = 0.2f;
 
         private void Awake() {
             rigidBody = GetComponent<Rigidbody>();

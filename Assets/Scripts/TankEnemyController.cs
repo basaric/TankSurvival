@@ -6,83 +6,64 @@ using Unity.Services.Analytics.Internal;
 using UnityEngine;
 using UnityEngine.AI;
 
+
 public class TankEnemyController : MonoBehaviour
 {
-    public float shootInterval = 3f;
-    public float moveInterval = 5f;
-    public float radius = 20f;
-
-    private bool agentUpdatePosition = false;
-    private bool agentUpdateRotation = false;
+    [Header("Navigation")]
+    [Tooltip("Choose between the default nav agent movement logic or the custom one")]
     public bool agentCustomMovement = true;
+    [Range(0.5f, 10f)]
+    [Tooltip("Different navigation speeds for different movement modes")]
+    public float navigationSpeed = 0.5f;
+    
+    protected NavMeshAgent agent;
+    protected GameObject player;
+    protected TankMovement tankMovement;
+    protected TankWeapon tankWeapon;
 
-    private NavMeshAgent agent;
-    private GameObject player;
-    private TankMovement tankMovement;
-    private TankWeapon tankWeapon;
-
-    public bool AgentUpdatePosition {
-        get { return agent.updatePosition; }
-        set {
-            agent.updatePosition = value;
+#if UNITY_EDITOR
+    void OnValidate() {
+        if (agent != null) {
+            refreshAgent();
         }
     }
-
-    public bool AgentUpdateRotation {
-        get { return agent.updateRotation; }
-        set {
-            agent.updateRotation = value;
-        }
+#endif
+    private void refreshAgent() {
+        agent.updatePosition = !agentCustomMovement;
+        agent.updateRotation = !agentCustomMovement;
+        agent.speed = navigationSpeed;
     }
 
-    void Awake() {
+    protected virtual void Awake() {
         agent = GetComponent<NavMeshAgent>();
         tankMovement = GetComponent<TankMovement>();
         tankWeapon = GetComponent<TankWeapon>();
 
-        agent.updatePosition = agentUpdatePosition;
-        agent.updateRotation = agentUpdateRotation;
+        refreshAgent();
     }
-    private void Start() {
+    protected virtual void Start() {
         player = GameObject.FindWithTag("Player");
-        InvokeRepeating("shootTimer", 0.0f, shootInterval);
-        InvokeRepeating("moveTimer", 0.0f, moveInterval);
     }
-    private void FixedUpdate() {
+    protected virtual void FixedUpdate() {
         if (!agent.isStopped && agentCustomMovement) {
             agent.nextPosition = transform.position;
             tankMovement.onMoveInput(agent.desiredVelocity);
         }
         aim();
     }
-    private void aim() {
-        tankMovement.aimAt(player.transform.position);
-        
-        /*if (agent.isStopped) {
-            if (player != null) {
-                tankMovement.aimAt(player.transform.position);
-            }
+    protected void aim() {
+        if (player != null) {
+            tankMovement.aimAt(player.transform.position);
         }
-        else {
-            tankMovement.aimAt(agent.destination);
-        }*/
     }
-    private void setDestination(Vector3 position) {
+    protected void setDestination(Vector3 position) {
         NavMeshHit navHit;
         if (NavMesh.SamplePosition(position, out navHit, 1.0f, NavMesh.AllAreas)) {
             agent.isStopped = false;
             agent.SetDestination(navHit.position);
         }
     }
-    private void shootTimer() {
-        tankWeapon.Fire();
-    }
-    private void moveTimer() {
-        if (player != null) {
-            setDestination(getRandomOffset(player.transform.position, radius));
-        }
-    }
-    private Vector3 getRandomOffset(Vector3 position, float radius) {
+    protected Vector3 getRandomOffset(Vector3 position, float radius) {
         Vector3 offset = UnityEngine.Random.onUnitSphere;
         offset.y = 0;
         offset = offset.normalized * radius;
