@@ -10,10 +10,10 @@ public class TankPlayerController : MonoBehaviour
     public string verticalAxisName = "Horizontal1";
     
     [Header("Camera Shake")]
-    public float cameraShakeDuration = 0.15f;
-    public float cameraShakeMagnitude = 1f;
-    public float cameraShakeFadeinTime = 0.2f;
-    public float cameraShakeFadeoutTime = 0.8f;
+    public float shakeDuration = 0.15f;
+    public float shakeMagnitude = 1f;
+    public float shakeFadeInDuration = 0.2f;
+    public float shakeFadeOutDuration = 0.2f;
     private Coroutine shakeCoroutine;
 
     private Vector3 movementInput = Vector3.zero;
@@ -31,21 +31,16 @@ public class TankPlayerController : MonoBehaviour
         movementInput.x = Input.GetAxis(horizontalAxisName);
         movementInput.y = Input.GetAxis(verticalAxisName);
 
+        pointerAim();
+
         if (Input.GetMouseButtonDown(0)) {
-            tankWeapon.Fire();
+            tankWeapon.triggerOn();
+        }
+        if (Input.GetMouseButtonUp(0)) {
+            tankWeapon.triggerOff();
         }
         if (Input.GetMouseButtonDown(1)) {
-            //GetComponent<TankHealth>().kill();
-            if (shakeCoroutine != null) {
-                StopCoroutine(shakeCoroutine);
-            }
-            shakeCoroutine = StartCoroutine(Shake(cameraShakeDuration, cameraShakeMagnitude));
-        }
-
-        Ray ray = cameraMain.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit)) {
-            tankMovement.aimAt(hit.point);
+            cameraShake(shakeDuration, shakeMagnitude, shakeFadeInDuration, shakeFadeOutDuration);
         }
     }
     private void FixedUpdate() {
@@ -53,9 +48,21 @@ public class TankPlayerController : MonoBehaviour
         moveInput.y = 0;
         tankMovement.onMoveInput(moveInput.normalized);
     }
-    public IEnumerator Shake(float duration, float magnitude) {
+    private void pointerAim() {
+        Ray ray = cameraMain.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit)) {
+            tankMovement.aimAt(hit.point);
+        }
+    }
+    public void cameraShake(float duration, float magnitude, float fadeinTime, float fadeoutTime) {
+        if (shakeCoroutine != null) {
+            StopCoroutine(shakeCoroutine);
+        }
+        shakeCoroutine = StartCoroutine(Shake(duration, magnitude, fadeinTime, fadeoutTime));
+    }
+    public IEnumerator Shake(float duration, float magnitude, float fadeinTime, float fadeoutTime) {
         Vector3 startPosition = cameraMain.transform.localPosition;
-        //Vector3 shakePosition = cameraMain.transform.localPosition;
         float elapsed = 0f;
         while (elapsed < duration) {
             Vector3 randomPosition = new Vector3(
@@ -63,11 +70,9 @@ public class TankPlayerController : MonoBehaviour
                 Random.Range(-magnitude, magnitude),
                 startPosition.z
             );
-            //shakePosition += randomPosition;
-            //cameraMain.transform.localPosition = Vector3.Lerp(cameraMain.transform.localPosition, shakePosition, cameraShakeLerpStrength);
             float progress = elapsed / duration;
-            float fadeIn = Utils.remapAndClamp(progress, 0f, cameraShakeFadeinTime, 0f, 1f);
-            float fadeOut = Utils.remapAndClamp(progress, cameraShakeFadeoutTime, 1f, 1f, 0f);
+            float fadeIn = Utils.remapAndClamp(progress, 0f, fadeinTime, 0f, 1f);
+            float fadeOut = Utils.remapAndClamp(progress, (1 - fadeoutTime), 1f, 1f, 0f);
             randomPosition = randomPosition * fadeIn * fadeOut;
             randomPosition.z = startPosition.z;
             cameraMain.transform.localPosition = randomPosition;

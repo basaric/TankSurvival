@@ -16,7 +16,7 @@ public class EnemyBasic : TankEnemyController {
         InvokeRepeating("moveTimer", 0.0f, moveInterval);
     }
     private void shootTimer() {
-        tankWeapon.Fire();
+        tankWeapon.fire();
     }
     private void moveTimer() {
         if (player != null) {

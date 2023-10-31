@@ -50,8 +50,6 @@ namespace Complete {
                 Quaternion newRotation = Quaternion.LookRotation(XZVelocity.normalized, Vector3.up);
                 newRotation.x = 0;
                 newRotation.z = 0;
-                float lerpSpeed = 0.3f + (Vector3.Dot(transform.forward, XZVelocity.normalized) - 1f) * 0.5f * 0.2f;
-                //transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, lerpSpeed);
                 rigidBody.AddTorque(Vector3.Cross(transform.forward, XZVelocity.normalized) * torqueStrength);
             }
         }
