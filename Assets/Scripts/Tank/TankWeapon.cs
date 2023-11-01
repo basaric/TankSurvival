@@ -15,6 +15,7 @@ namespace Complete {
         public float recoilStrength = 0;
         public bool autoFire = true;
         public float fireRate = 0.3f;
+        public ParticleSystem particleFX;
 
         private bool isTriggered = false;
         private Coroutine fireCoroutine;
@@ -24,6 +25,9 @@ namespace Complete {
             shellInstance.GetComponent<Rigidbody>().velocity = launchVelocity * m_FireTransform.forward;
             shellInstance.GetComponent<ShellExplosion>().owner = gameObject;
             gameObject.GetComponent<Rigidbody>().AddForce(-recoilStrength * m_FireTransform.forward);
+
+            particleFX.Play();
+            //GameObject particles = Instantiate(particleFX, m_FireTransform.position, m_FireTransform.rotation);
 
             m_ShootingAudio.clip = m_FireClip;
             m_ShootingAudio.Play();
@@ -38,7 +42,9 @@ namespace Complete {
         }
         public void triggerOff() {
             isTriggered = false;
-            StopCoroutine(fireCoroutine);
+            if (fireCoroutine != null) {
+                StopCoroutine(fireCoroutine);
+            }
         }
         public IEnumerator fireLoop() {
             while (isTriggered) {

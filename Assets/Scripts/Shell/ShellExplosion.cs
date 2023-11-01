@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Complete {
     public class ShellExplosion : MonoBehaviour {
         public LayerMask m_TankMask;
-        public ParticleSystem m_ExplosionParticles;
+        public ParticleSystem hitFX;
         public AudioSource m_ExplosionAudio;
         public float damageMultiplier = 100f;
         public float m_ExplosionForce = 1000f;
@@ -38,12 +38,13 @@ namespace Complete {
                 destroyable.destroy();
             }
 
-            
-            m_ExplosionParticles.transform.parent = null;
-            m_ExplosionParticles.Play();
-            m_ExplosionAudio.Play();
-            ParticleSystem.MainModule mainModule = m_ExplosionParticles.main;
-            Destroy(m_ExplosionParticles.gameObject, mainModule.duration);
+            hitFX = Instantiate(hitFX);
+            hitFX.transform.position = transform.position;
+            hitFX.transform.rotation = transform.rotation;
+            hitFX.Play();
+            //m_ExplosionAudio.Play();
+            ParticleSystem.MainModule mainModule = hitFX.main;
+            Destroy(hitFX.gameObject, mainModule.duration);
             Destroy(gameObject);
         }
 

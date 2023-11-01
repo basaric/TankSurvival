@@ -25499,7 +25499,6 @@ GameObject:
   - component: {fileID: 561589185}
   - component: {fileID: 561589187}
   - component: {fileID: 561589186}
-  - component: {fileID: 561589188}
   m_Layer: 5
   m_Name: TimeScale
   m_TagString: Untagged
@@ -25624,18 +25623,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 561589184}
   m_CullTransparentMesh: 0
---- !u!114 &561589188
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 561589184}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57a9bba4c7c6adc40805917ce487896a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &569141484
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26281,11 +26268,31 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: -0.7071068
       objectReference: {fileID: 0}
+    - target: {fileID: 199112704592060644, guid: c1c88308ebb5d2541a282905b854ee4c,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 199169249328282976, guid: c1c88308ebb5d2541a282905b854ee4c,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 199385667782822996, guid: c1c88308ebb5d2541a282905b854ee4c,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 199385667782822996, guid: c1c88308ebb5d2541a282905b854ee4c,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 0f53c9d8ad82e7e42acd9cd32b6a1da1, type: 2}
+    - target: {fileID: 199556704037818580, guid: c1c88308ebb5d2541a282905b854ee4c,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
