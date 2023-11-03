@@ -10303,6 +10303,7 @@ MonoBehaviour:
   recoilStrength: 0
   autoFire: 1
   fireRate: 0.3
+  particleFX: {fileID: 19807510, guid: 1911d89758d97cc4898d240e9e2545f4, type: 3}
 --- !u!1 &173936
 GameObject:
   m_ObjectHideFlags: 0
