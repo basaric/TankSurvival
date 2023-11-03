@@ -183,6 +183,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2048265966587693632, guid: 9b0c2306a164ca34f9cee61b996d513b,
         type: 3}
+      propertyPath: maxX
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 2048265966587693632, guid: 9b0c2306a164ca34f9cee61b996d513b,
+        type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
@@ -204,11 +209,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 6134308048522549948, guid: 9b0c2306a164ca34f9cee61b996d513b,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 574727419}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9b0c2306a164ca34f9cee61b996d513b, type: 3}
 --- !u!1 &102826920
 GameObject:
@@ -729,29 +730,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: be87fb42f6d29e2488da41daefec0c78, type: 3}
---- !u!1 &574727416 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6134308048522549948, guid: 9b0c2306a164ca34f9cee61b996d513b,
-    type: 3}
-  m_PrefabInstance: {fileID: 92410517}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &574727419
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 574727416}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fb816f508956f242948a69803028213, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lerpStrength: 0.1
-  lerpStrengthColor: 0.5
-  targetColor: {r: 1, g: 1, b: 1, a: 1}
-  rotationSpeed: 15
-  rotationSpeedVariationRange: 0.3
 --- !u!1 &585822131
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,7 +5,12 @@ namespace Complete {
     public class CameraControl : MonoBehaviour {
         public float m_DampTime = 0.2f;                 
         public float m_ScreenEdgeBuffer = 4f;           
-        public float m_MinSize = 6.5f;                  
+        public float m_MinSize = 6.5f;
+
+        public float horizontalSensitivity = 0.1f;
+        public float verticalSensitivity = -0.1f;
+        public float minX = 35f;
+        public float maxX = 85f;
 
         private Camera m_Camera;                        
         private GameObject player;
@@ -17,6 +22,17 @@ namespace Complete {
         void Start() {
             player = GameObject.FindWithTag("Player");
             transform.position = player.transform.position;
+        }
+        private void Update() {
+            float mouseX = Input.GetAxis("Mouse X");
+            float mouseY = Input.GetAxis("Mouse Y");
+            if (Input.GetMouseButton(1)) {
+                Vector3 _rotation = m_Camera.transform.parent.localEulerAngles;
+                _rotation.x += mouseY * verticalSensitivity * Time.deltaTime;
+                _rotation.x = Mathf.Clamp(_rotation.x, minX, maxX);
+                m_Camera.transform.parent.localEulerAngles = _rotation;
+                transform.Rotate(0f, mouseX * horizontalSensitivity * Time.deltaTime, 0f);
+            }
         }
         private void FixedUpdate() {
             if (player != null) {
