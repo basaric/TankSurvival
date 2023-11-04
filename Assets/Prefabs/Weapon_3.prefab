@@ -150,8 +150,8 @@ MonoBehaviour:
   m_Shell: {fileID: 192454, guid: 008ecb1b70bec724fa2cd34255b0d8f8, type: 3}
   launchVelocity: 30
   recoilStrength: 0
-  autoFire: 0
-  fireRate: 0.3
+  autoFire: 1
+  fireRate: 0.2
   muzzleFX: {fileID: 8293658627826241695}
   m_ShootingAudio: {fileID: 4003785976949193175}
   m_FireClip: {fileID: 8300000, guid: b2c7a6de6880b5f49b4b713b3fd96d57, type: 3}

@@ -8,12 +8,13 @@ namespace Complete {
         public Vector3 positionOffset = new Vector3(0, 50, 0);
         public Slider slider;
         public bool destroyOnKill = true;
+        public bool showSlider = false;
 
         private float health;
         private Camera mainCamera;
         
         private void Awake() {
-            slider.gameObject.transform.parent.gameObject.SetActive(true);
+            slider.gameObject.transform.parent.gameObject.SetActive(showSlider);
         }
         private void OnEnable() {
             mainCamera = Camera.main;

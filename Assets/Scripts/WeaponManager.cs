@@ -18,7 +18,8 @@ public class WeaponManager : MonoBehaviour
         newIndex = (int)Mathf.Clamp(equipedIndex, 0, weapons.Count - 1);
 
         if (equipedWeapon != null && equipedWeapon.activeInHierarchy) {
-            weapons[equipedIndex].SetActive(false);
+            equipedWeaponComp.triggerOff();
+            equipedWeapon.SetActive(false);
             equipedWeapon = null;
             equipedWeaponComp = null;
         }

@@ -465,6 +465,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11409376, guid: a0406ce19b8fefb40b407ad628dc2a78, type: 3}
+      propertyPath: showSlider
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11409376, guid: a0406ce19b8fefb40b407ad628dc2a78, type: 3}
       propertyPath: startHealth
       value: 50
       objectReference: {fileID: 0}
