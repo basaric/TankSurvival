@@ -7,6 +7,7 @@ namespace Complete {
         public GameObject explosionPrefab;
         public Vector3 positionOffset = new Vector3(0, 50, 0);
         public Slider slider;
+        public bool destroyOnKill = true;
 
         private float health;
         private Camera mainCamera;
@@ -39,7 +40,12 @@ namespace Complete {
             explosion.Play();
             explosion.GetComponent<AudioSource>().Play();
             Destroy(explosion,  3f);
-            Destroy(gameObject);
+
+            if (destroyOnKill) {
+                Destroy(gameObject);
+            } else {
+                gameObject.SetActive(false);
+            }
         }
     }
 }
