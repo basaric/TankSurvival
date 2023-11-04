@@ -38,7 +38,7 @@ public class TankEnemyController : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         tankMovement = GetComponent<TankMovement>();
         tankWeapon = GetComponentInChildren<TankWeapon>();
-
+        
         refreshAgent();
     }
     protected virtual void Start() {

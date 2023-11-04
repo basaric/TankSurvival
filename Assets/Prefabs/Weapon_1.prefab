@@ -144,14 +144,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_FireTransform: {fileID: 7808485253627874198}
-  m_ShootingAudio: {fileID: 847871197740536178}
   m_Shell: {fileID: 192454, guid: 008ecb1b70bec724fa2cd34255b0d8f8, type: 3}
-  m_FireClip: {fileID: 8300000, guid: 9068298b5a835e943bffd244b53429f3, type: 3}
   launchVelocity: 30
   recoilStrength: 0
   autoFire: 1
   fireRate: 0.3
   muzzleFX: {fileID: 1954159582656205857}
+  m_ShootingAudio: {fileID: 847871197740536178}
+  m_FireClip: {fileID: 8300000, guid: 466c2faafc8febe43985e9e0c1d383f7, type: 3}
+  isLooping: 1
 --- !u!1001 &1864161353822734715
 PrefabInstance:
   m_ObjectHideFlags: 0

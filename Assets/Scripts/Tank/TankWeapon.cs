@@ -6,19 +6,27 @@ namespace Complete {
     public class TankWeapon : MonoBehaviour {
         [Header("Tank")]
         public Transform m_FireTransform;
-        public AudioSource m_ShootingAudio;
 
         [Header("Weapon")]
         public GameObject m_Shell;
-        public AudioClip m_FireClip;
         public float launchVelocity = 30f;
         public float recoilStrength = 0;
         public bool autoFire = true;
         public float fireRate = 0.3f;
         public ParticleSystem muzzleFX;
 
+        [Header("Audio")]
+        public AudioSource m_ShootingAudio;
+        public AudioClip m_FireClip;
+        public bool isLooping = false;
+
         private bool isTriggered = false;
         private Coroutine fireCoroutine;
+
+        private void Start() {
+            m_ShootingAudio.loop = isLooping;
+            m_ShootingAudio.clip = m_FireClip;
+        }
 
         public void fire() {
             GameObject shellInstance = Instantiate(m_Shell, m_FireTransform.position, m_FireTransform.rotation) as GameObject;
@@ -31,8 +39,9 @@ namespace Complete {
 
             muzzleFX.Play();
 
-            m_ShootingAudio.clip = m_FireClip;
-            m_ShootingAudio.Play();
+            if (!isLooping) {
+                m_ShootingAudio.Play();
+            }
         }
         public void triggerOn() {
             if (autoFire) {
@@ -41,11 +50,17 @@ namespace Complete {
             } else {
                 fire();
             }
+            if (isLooping) {
+                m_ShootingAudio.Play();
+            }
         }
         public void triggerOff() {
             isTriggered = false;
             if (fireCoroutine != null) {
                 StopCoroutine(fireCoroutine);
+            }
+            if (isLooping) {
+                m_ShootingAudio.Stop();
             }
         }
         public IEnumerator fireLoop() {
