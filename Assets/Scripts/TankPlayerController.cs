@@ -14,7 +14,9 @@ public class TankPlayerController : MonoBehaviour
     public float shakeMagnitude = 1f;
     public float shakeFadeInDuration = 0.2f;
     public float shakeFadeOutDuration = 0.2f;
+    public float infiniteShakeFadeInDuration = 0f;
     private Coroutine shakeCoroutine;
+    private Vector3 shakeStartPosition;
 
     private Vector3 movementInput = Vector3.zero;
     private Camera cameraMain;
@@ -35,9 +37,11 @@ public class TankPlayerController : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0)) {
             weaponManager.triggerOn();
+            cameraShakeInfinite(0.3f, infiniteShakeFadeInDuration);
         }
         if (Input.GetMouseButtonUp(0)) {
             weaponManager.triggerOff();
+            stopShaking();
         }
 
         if (Input.mouseScrollDelta.y != 0f) {
@@ -49,7 +53,7 @@ public class TankPlayerController : MonoBehaviour
         }
 
         if (Input.GetMouseButtonDown(1)) {
-            cameraShake(shakeDuration, shakeMagnitude, shakeFadeInDuration, shakeFadeOutDuration);
+            //cameraShake(shakeDuration, shakeMagnitude, shakeFadeInDuration, shakeFadeOutDuration);
         }
     }
     private void FixedUpdate() {
@@ -71,30 +75,57 @@ public class TankPlayerController : MonoBehaviour
         }
     }
     public void cameraShake(float duration, float magnitude, float fadeinTime, float fadeoutTime) {
-        if (shakeCoroutine != null) {
-            StopCoroutine(shakeCoroutine);
-        }
+        stopShaking();
+        shakeStartPosition = cameraMain.transform.localPosition;
         shakeCoroutine = StartCoroutine(Shake(duration, magnitude, fadeinTime, fadeoutTime));
     }
-    public IEnumerator Shake(float duration, float magnitude, float fadeinTime, float fadeoutTime) {
-        Vector3 startPosition = cameraMain.transform.localPosition;
+    public IEnumerator Shake(float duration = 0.1f, float magnitude = 0.5f, float fadeinTime = 0.5f, float fadeoutTime = 0.5f) {
         float elapsed = 0f;
         while (elapsed < duration) {
             Vector3 randomPosition = new Vector3(
                 Random.Range(-magnitude, magnitude),
                 Random.Range(-magnitude, magnitude),
-                startPosition.z
+                shakeStartPosition.z
             );
             float progress = elapsed / duration;
             float fadeIn = Utils.remapAndClamp(progress, 0f, fadeinTime, 0f, 1f);
             float fadeOut = Utils.remapAndClamp(progress, (1 - fadeoutTime), 1f, 1f, 0f);
             randomPosition = randomPosition * fadeIn * fadeOut;
-            randomPosition.z = startPosition.z;
+            randomPosition.z = shakeStartPosition.z;
             cameraMain.transform.localPosition = randomPosition;
             elapsed += Time.deltaTime;
             yield return null;
         }
-        cameraMain.transform.localPosition = startPosition;
+        cameraMain.transform.localPosition = shakeStartPosition;
         shakeCoroutine = null;
+    }
+    public void cameraShakeInfinite(float magnitude, float fadeinTime) {
+        shakeStartPosition = cameraMain.transform.localPosition;
+        stopShaking();
+        shakeCoroutine = StartCoroutine(ShakeInfinite(magnitude, fadeinTime));
+    }
+    public void stopShaking() {
+        if (shakeCoroutine != null) {
+            StopCoroutine(shakeCoroutine);
+        }
+        cameraMain.transform.localPosition = shakeStartPosition;
+        shakeCoroutine = null;
+    }
+    public IEnumerator ShakeInfinite(float magnitude = 0.5f, float fadeinTime = 0.5f) {
+        float elapsed = 0f;
+        while (true) {
+            Vector3 randomPosition = new Vector3(
+                Random.Range(-magnitude, magnitude),
+                Random.Range(-magnitude, magnitude),
+                shakeStartPosition.z
+            );
+            float progress = elapsed / fadeinTime;
+            float fadeIn = Utils.remapAndClamp(progress, 0f, fadeinTime, 0f, 1f);
+            randomPosition = randomPosition * fadeIn;
+            randomPosition.z = shakeStartPosition.z;
+            cameraMain.transform.localPosition = randomPosition;
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
     }
 }

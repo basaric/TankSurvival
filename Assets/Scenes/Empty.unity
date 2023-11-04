@@ -655,7 +655,7 @@ PrefabInstance:
     - target: {fileID: 4512227698927657297, guid: c8b2bcefe9e945246b01cce7d136b1b0,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4512227698927897091, guid: c8b2bcefe9e945246b01cce7d136b1b0,
         type: 3}
@@ -706,6 +706,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4512227698938893073, guid: c8b2bcefe9e945246b01cce7d136b1b0,
+        type: 3}
+      propertyPath: startHealth
+      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -919,7 +924,7 @@ PrefabInstance:
     - target: {fileID: 4512227698927657297, guid: c8b2bcefe9e945246b01cce7d136b1b0,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4512227698927897091, guid: c8b2bcefe9e945246b01cce7d136b1b0,
         type: 3}
@@ -970,6 +975,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4512227698938893073, guid: c8b2bcefe9e945246b01cce7d136b1b0,
+        type: 3}
+      propertyPath: startHealth
+      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1130,7 +1140,7 @@ PrefabInstance:
     - target: {fileID: 4512227698927657297, guid: c8b2bcefe9e945246b01cce7d136b1b0,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4512227698927897091, guid: c8b2bcefe9e945246b01cce7d136b1b0,
         type: 3}
@@ -1182,6 +1192,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4512227698938893073, guid: c8b2bcefe9e945246b01cce7d136b1b0,
+        type: 3}
+      propertyPath: startHealth
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 4782586136325758383, guid: c8b2bcefe9e945246b01cce7d136b1b0,
         type: 3}
       propertyPath: radius
@@ -1208,7 +1223,7 @@ PrefabInstance:
     - target: {fileID: 4512227698927657297, guid: c8b2bcefe9e945246b01cce7d136b1b0,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4512227698927897091, guid: c8b2bcefe9e945246b01cce7d136b1b0,
         type: 3}
@@ -1259,6 +1274,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4512227698938893073, guid: c8b2bcefe9e945246b01cce7d136b1b0,
+        type: 3}
+      propertyPath: startHealth
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 4782586136325758383, guid: c8b2bcefe9e945246b01cce7d136b1b0,
         type: 3}
@@ -1390,7 +1410,7 @@ PrefabInstance:
     - target: {fileID: 4512227698927657297, guid: c8b2bcefe9e945246b01cce7d136b1b0,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4512227698927897091, guid: c8b2bcefe9e945246b01cce7d136b1b0,
         type: 3}
@@ -1441,6 +1461,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4512227698938893073, guid: c8b2bcefe9e945246b01cce7d136b1b0,
+        type: 3}
+      propertyPath: startHealth
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 4782586136325758383, guid: c8b2bcefe9e945246b01cce7d136b1b0,
         type: 3}
@@ -1791,7 +1816,7 @@ PrefabInstance:
     - target: {fileID: 4512227698927657297, guid: c8b2bcefe9e945246b01cce7d136b1b0,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4512227698927897091, guid: c8b2bcefe9e945246b01cce7d136b1b0,
         type: 3}
@@ -1842,6 +1867,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4512227698938893073, guid: c8b2bcefe9e945246b01cce7d136b1b0,
+        type: 3}
+      propertyPath: startHealth
+      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1982,7 +2012,7 @@ PrefabInstance:
     - target: {fileID: 4512227698927657297, guid: c8b2bcefe9e945246b01cce7d136b1b0,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4512227698927897091, guid: c8b2bcefe9e945246b01cce7d136b1b0,
         type: 3}
@@ -2034,6 +2064,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4512227698938893073, guid: c8b2bcefe9e945246b01cce7d136b1b0,
+        type: 3}
+      propertyPath: startHealth
+      value: 30
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2055,7 +2090,7 @@ PrefabInstance:
     - target: {fileID: 4512227698927657297, guid: c8b2bcefe9e945246b01cce7d136b1b0,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4512227698927897091, guid: c8b2bcefe9e945246b01cce7d136b1b0,
         type: 3}
@@ -2106,6 +2141,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4512227698938893073, guid: c8b2bcefe9e945246b01cce7d136b1b0,
+        type: 3}
+      propertyPath: startHealth
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 4782586136325758383, guid: c8b2bcefe9e945246b01cce7d136b1b0,
         type: 3}

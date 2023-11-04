@@ -31,7 +31,7 @@ namespace Complete {
             }
         }
         private void refreshGUI() {
-            slider.value = health;
+            slider.value = health / startHealth * slider.maxValue;
         }
         public void kill() {
             ParticleSystem explosion = Instantiate(explosionPrefab).GetComponent<ParticleSystem>();
