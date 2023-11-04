@@ -19,12 +19,12 @@ public class TankPlayerController : MonoBehaviour
     private Vector3 movementInput = Vector3.zero;
     private Camera cameraMain;
     private TankMovement tankMovement;
-    private TankWeapon tankWeapon;
+    private WeaponManager weaponManager;
 
     private void Awake() {
         cameraMain = Camera.main;
         tankMovement = gameObject.GetComponent<TankMovement>();
-        tankWeapon = gameObject.GetComponent<TankWeapon>();
+        weaponManager = gameObject.GetComponent<WeaponManager>();
         Cursor.visible = false;
     }
     void Update() {
@@ -34,11 +34,20 @@ public class TankPlayerController : MonoBehaviour
         pointerAim();
 
         if (Input.GetMouseButtonDown(0)) {
-            tankWeapon.triggerOn();
+            weaponManager.triggerOn();
         }
         if (Input.GetMouseButtonUp(0)) {
-            tankWeapon.triggerOff();
+            weaponManager.triggerOff();
         }
+
+        if (Input.mouseScrollDelta.y != 0f) {
+            if (Input.mouseScrollDelta.y > 0f) {
+                weaponManager.equipNext();
+            } else {
+                weaponManager.equipPrevious();
+            }
+        }
+
         if (Input.GetMouseButtonDown(1)) {
             cameraShake(shakeDuration, shakeMagnitude, shakeFadeInDuration, shakeFadeOutDuration);
         }
@@ -46,13 +55,19 @@ public class TankPlayerController : MonoBehaviour
     private void FixedUpdate() {
         Vector3 moveInput = cameraMain.transform.forward * movementInput.x + cameraMain.transform.right * movementInput.y;
         moveInput.y = 0;
-        tankMovement.onMoveInput(moveInput.normalized);
+        if (tankMovement != null) {
+            tankMovement.onMoveInput(moveInput.normalized);
+        }
     }
     private void pointerAim() {
         Ray ray = cameraMain.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit)) {
-            tankMovement.aimAt(hit.point);
+            if (tankMovement != null) {
+                tankMovement.aimAt(hit.point);
+            } else {
+                Utils.lookAtPoint(transform, hit.point);
+            }
         }
     }
     public void cameraShake(float duration, float magnitude, float fadeinTime, float fadeoutTime) {

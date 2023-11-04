@@ -37,7 +37,7 @@ namespace Complete {
             ParticleSystem explosion = Instantiate(explosionPrefab).GetComponent<ParticleSystem>();
             explosion.transform.position = transform.position;
             explosion.Play();
-            //explosion.GetComponent<AudioSource>().Play();
+            explosion.GetComponent<AudioSource>().Play();
             Destroy(explosion,  3f);
             Destroy(gameObject);
         }

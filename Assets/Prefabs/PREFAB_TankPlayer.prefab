@@ -64,6 +64,10 @@ PrefabInstance:
       propertyPath: m_AngularDrag
       value: 0.01
       objectReference: {fileID: 0}
+    - target: {fileID: 8268710, guid: a0406ce19b8fefb40b407ad628dc2a78, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 11409376, guid: a0406ce19b8fefb40b407ad628dc2a78, type: 3}
       propertyPath: startHealth
       value: 9999

@@ -15,7 +15,7 @@ namespace Complete {
         public float recoilStrength = 0;
         public bool autoFire = true;
         public float fireRate = 0.3f;
-        public ParticleSystem particleFX;
+        public ParticleSystem muzzleFX;
 
         private bool isTriggered = false;
         private Coroutine fireCoroutine;
@@ -24,10 +24,12 @@ namespace Complete {
             GameObject shellInstance = Instantiate(m_Shell, m_FireTransform.position, m_FireTransform.rotation) as GameObject;
             shellInstance.GetComponent<Rigidbody>().velocity = launchVelocity * m_FireTransform.forward;
             shellInstance.GetComponent<ShellExplosion>().owner = gameObject;
-            gameObject.GetComponent<Rigidbody>().AddForce(-recoilStrength * m_FireTransform.forward);
 
-            particleFX.Play();
-            //GameObject particles = Instantiate(particleFX, m_FireTransform.position, m_FireTransform.rotation);
+            if (gameObject.GetComponent<Rigidbody>()) {
+                gameObject.GetComponent<Rigidbody>().AddForce(-recoilStrength * m_FireTransform.forward);
+            }
+
+            muzzleFX.Play();
 
             m_ShootingAudio.clip = m_FireClip;
             m_ShootingAudio.Play();
