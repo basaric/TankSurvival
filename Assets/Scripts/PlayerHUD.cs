@@ -7,14 +7,14 @@ using UnityEngine.UI;
 public class PlayerHUD : MonoBehaviour
 {
     private Camera cameraHUD;
-    private Image crosshair;
+    public Image crosshair;
 
-    public Text missionName, missionTime, missionDescription, missionTxt, missionStatus;
+    public Text missionName, missionTime, missionDescription, missionTxt, missionStatus, tooltip;
     private string stringOnSuccessText = "Mission <color=#00ff00>success!</color>";
     private string stringOnFailureText = "Mission <color=#ff0000>failed!</color>";
 
     private void Awake() {
-        crosshair = transform.Find("Crosshair").GetComponent<Image>();
+        //crosshair = transform.Find("Crosshair").GetComponent<Image>();
         cameraHUD = GameObject.FindWithTag("hudCamera").GetComponent<Camera>();
 
         stopMission();
@@ -22,7 +22,8 @@ public class PlayerHUD : MonoBehaviour
     }
 
     private void Update() {
-        crosshair.transform.position = cameraHUD.ScreenToWorldPoint(Input.mousePosition);
+        //crosshair.transform.position = cameraHUD.ScreenToWorldPoint(Input.mousePosition);
+        crosshair.transform.position = Input.mousePosition;
     }
     public void startMission(Mission mission) {
         missionName.enabled = true;
@@ -50,5 +51,13 @@ public class PlayerHUD : MonoBehaviour
     }
     public void hideMissionStatus() {
         missionStatus.enabled = false;
+    }
+    public void showTooltip(Vector3 position, string text) {
+        tooltip.enabled = true;
+        tooltip.transform.position = position;
+        tooltip.text = text;
+    }
+    public void hideTooltip() {
+        tooltip.enabled = false;
     }
 }

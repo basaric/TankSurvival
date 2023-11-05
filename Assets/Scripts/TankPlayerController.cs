@@ -18,18 +18,39 @@ public class TankPlayerController : MonoBehaviour
     private Coroutine shakeCoroutine;
     private Vector3 shakeStartPosition;
 
+    private PlayerHUD hud;
     private Vector3 movementInput = Vector3.zero;
     private Camera cameraMain;
     private TankMovement tankMovement;
     private WeaponManager weaponManager;
 
+    private GroundTrigger _overlapingTrigger;
+    private Vector3 tooltipPosition;
+
+    public GroundTrigger overlapingTrigger {
+        get {
+            return _overlapingTrigger;
+        }
+        set {
+            _overlapingTrigger = value;
+        }
+    }
+
     private void Awake() {
         cameraMain = Camera.main;
         tankMovement = gameObject.GetComponent<TankMovement>();
         weaponManager = gameObject.GetComponent<WeaponManager>();
+        hud = GameObject.FindWithTag("HUD").GetComponent<PlayerHUD>();
         Cursor.visible = false;
     }
     void Update() {
+        if (_overlapingTrigger != null) {
+            hud.showTooltip(tooltipPosition, _overlapingTrigger.tooltip);
+        }
+        else {
+            hud.hideTooltip();
+        }
+
         movementInput.x = Input.GetAxis(horizontalAxisName);
         movementInput.y = Input.GetAxis(verticalAxisName);
 
@@ -55,6 +76,12 @@ public class TankPlayerController : MonoBehaviour
         if (Input.GetMouseButtonDown(1)) {
             //cameraShake(shakeDuration, shakeMagnitude, shakeFadeInDuration, shakeFadeOutDuration);
         }
+
+        if (Input.GetButtonDown("Interact")) {
+            if (_overlapingTrigger != null) {
+                _overlapingTrigger.trigger();
+            }
+        }
     }
     private void FixedUpdate() {
         Vector3 moveInput = cameraMain.transform.forward * movementInput.x + cameraMain.transform.right * movementInput.y;
@@ -62,6 +89,10 @@ public class TankPlayerController : MonoBehaviour
         if (tankMovement != null) {
             tankMovement.onMoveInput(moveInput.normalized);
         }
+        if (_overlapingTrigger != null) {
+            tooltipPosition = cameraMain.WorldToScreenPoint(_overlapingTrigger.transform.position);
+        }
+        
     }
     private void pointerAim() {
         Ray ray = cameraMain.ScreenPointToRay(Input.mousePosition);

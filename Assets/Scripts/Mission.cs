@@ -15,9 +15,9 @@ public class Mission : MonoBehaviour
     private int elapsed = 0;
     private bool inProgress = false;
 
-    private void Start() {
+    private void OnEnable() {
         hud = GameObject.FindWithTag("HUD").GetComponent<PlayerHUD>();
-        Invoke("startMission", 3f);
+        startMission();
     }
     void startMission() {
         inProgress = true;
