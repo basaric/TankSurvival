@@ -55,7 +55,6 @@ public class EnemySpawner : MonoBehaviour
     }
     void onEnemyDestroyed(TankHealth health) {
         killedCount += 1;
-        Debug.Log(killedCount);
         if (killedCount >= maxEnemiesCount) {
             CancelInvoke("SpawnEnemies");
             onFinished.Invoke();

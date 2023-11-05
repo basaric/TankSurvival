@@ -45,7 +45,7 @@ public class TankEnemyController : MonoBehaviour
         player = GameObject.FindWithTag("Player");
     }
     protected virtual void FixedUpdate() {
-        if (!agent.isStopped && agentCustomMovement) {
+        if (!agent.isStopped && agentCustomMovement && agent.isOnNavMesh) {
             agent.nextPosition = transform.position;
             tankMovement.onMoveInput(agent.desiredVelocity);
         }

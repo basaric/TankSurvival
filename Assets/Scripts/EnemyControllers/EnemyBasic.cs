@@ -26,7 +26,7 @@ public class EnemyBasic : TankEnemyController {
         Invoke("shootTimer", Random.Range(shootIntervalMin, shootIntervalMax));
     }
     private void moveTimer() {
-        if (player != null) {
+        if (player != null && base.agent.isOnNavMesh) {
             setDestination(Utils.getRandomOffsetInRadius(player.transform.position, radius));
         }
     }
