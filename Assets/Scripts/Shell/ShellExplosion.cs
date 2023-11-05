@@ -11,8 +11,16 @@ namespace Complete {
         public float m_ExplosionRadius = 5f;
         public GameObject owner;
 
-        private void Start() {
-            Destroy(gameObject, m_MaxLifeTime);
+        void Start() {
+            hitFX = Instantiate(hitFX);
+        }
+        private void OnEnable() {
+            Invoke("kill", m_MaxLifeTime);
+        }
+
+        private void kill() {
+            CancelInvoke("kill");
+            gameObject.SetActive(false);
         }
 
         private void OnTriggerEnter(Collider other) {
@@ -38,14 +46,14 @@ namespace Complete {
                 destroyable.destroy();
             }
 
-            hitFX = Instantiate(hitFX);
+            hitFX.gameObject.SetActive(true);
             hitFX.transform.position = transform.position;
             hitFX.transform.rotation = transform.rotation;
             hitFX.Play();
             //m_ExplosionAudio.Play();
-            ParticleSystem.MainModule mainModule = hitFX.main;
-            Destroy(hitFX.gameObject, mainModule.duration);
-            Destroy(gameObject);
+            //ParticleSystem.MainModule mainModule = hitFX.main;
+            //Destroy(hitFX.gameObject, mainModule.duration);
+            kill();
         }
 
         private float CalculateDamage(Vector3 targetPosition) {

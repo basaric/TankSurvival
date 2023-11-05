@@ -10,12 +10,14 @@ namespace Complete {
         [Header("Weapon")]
         public bool isInstant = false;
         public float range = 10f;
-        public GameObject m_Shell;
         public float launchVelocity = 30f;
         public float recoilStrength = 0;
         public bool autoFire = true;
         public float fireRate = 0.3f;
         public ParticleSystem muzzleFX;
+
+        public GameObject projectilePrefab;
+        public ObjectPool pool;
 
         [Header("Audio")]
         public AudioSource m_ShootingAudio;
@@ -55,12 +57,17 @@ namespace Complete {
                 }
                 
             } else {
-                GameObject shellInstance = Instantiate(m_Shell, m_FireTransform.position, m_FireTransform.rotation) as GameObject;
-                shellInstance.GetComponent<Rigidbody>().velocity = launchVelocity * m_FireTransform.forward;
-                shellInstance.GetComponent<ShellExplosion>().owner = gameObject;
+                //GameObject shellInstance = Instantiate(projectilePrefab, m_FireTransform.position, m_FireTransform.rotation) as GameObject;
+                GameObject shellInstance = pool.getObject();
+                if (shellInstance != null) {
+                    shellInstance.transform.SetPositionAndRotation(m_FireTransform.position, m_FireTransform.rotation);
+                    shellInstance.SetActive(true);
+                    shellInstance.GetComponent<Rigidbody>().velocity = launchVelocity * m_FireTransform.forward;
+                    shellInstance.GetComponent<ShellExplosion>().owner = gameObject;
 
-                if (gameObject.GetComponent<Rigidbody>()) {
-                    gameObject.GetComponent<Rigidbody>().AddForce(-recoilStrength * m_FireTransform.forward);
+                    if (gameObject.GetComponent<Rigidbody>()) {
+                        gameObject.GetComponent<Rigidbody>().AddForce(-recoilStrength * m_FireTransform.forward);
+                    }
                 }
             }
 
