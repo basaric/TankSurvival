@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 namespace Complete {
     public class TankHealth : MonoBehaviour {
@@ -9,6 +10,8 @@ namespace Complete {
         public Slider slider;
         public bool destroyOnKill = true;
         public bool showSlider = false;
+
+        public event Action<TankHealth> onKilled; 
 
         private float health;
         private Camera mainCamera;
@@ -41,6 +44,8 @@ namespace Complete {
             explosion.Play();
             explosion.GetComponent<AudioSource>().Play();
             Destroy(explosion,  3f);
+
+            onKilled?.Invoke(this);
 
             if (destroyOnKill) {
                 Destroy(gameObject);

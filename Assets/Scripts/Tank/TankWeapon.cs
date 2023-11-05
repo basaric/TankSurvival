@@ -9,6 +9,7 @@ namespace Complete {
 
         [Header("Weapon")]
         public bool isInstant = false;
+        public float damage = 999f;
         public float range = 10f;
         public float launchVelocity = 30f;
         public float recoilStrength = 0;
@@ -52,7 +53,7 @@ namespace Complete {
                 if (Physics.Raycast(ray, out RaycastHit hit, range)) {
                     TankHealth health = hit.transform.gameObject.GetComponent<TankHealth>();
                     if (health != null) {
-                        health.TakeDamage(20f);
+                        health.TakeDamage(damage);
                     }
                 }
                 

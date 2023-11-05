@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using UnityEditor.XR.LegacyInputHelpers;
 using UnityEngine;
 
 namespace Complete {
@@ -12,9 +13,13 @@ namespace Complete {
         public float minX = 35f;
         public float maxX = 85f;
 
+        public float distanceThreshold = 25f;
+        public float distanceMultiplier = 0.5f;
+
         private Camera m_Camera;                        
         private GameObject player;
-        private Vector3 m_MoveVelocity;                 
+        private Vector3 m_MoveVelocity;
+        private Vector3 offset = Vector3.zero;
 
         private void Awake() {
             m_Camera = GetComponentInChildren<Camera>();
@@ -33,10 +38,20 @@ namespace Complete {
                 m_Camera.transform.parent.localEulerAngles = _rotation;
                 transform.Rotate(0f, mouseX * horizontalSensitivity * Time.deltaTime, 0f);
             }
+
+            Ray ray = m_Camera.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit)) {
+                offset = player.transform.position - hit.point;
+                offset.y = 0;
+                offset = Vector3.ClampMagnitude(offset, distanceThreshold);
+                offset = offset * distanceMultiplier;
+
+            }
         }
         private void FixedUpdate() {
             if (player != null) {
-                transform.position = Vector3.SmoothDamp(transform.position, player.transform.position, ref m_MoveVelocity, m_DampTime);
+                transform.position = Vector3.SmoothDamp(transform.position, player.transform.position - offset, ref m_MoveVelocity, m_DampTime);
             }
         }
         private Vector3 FindAveragePosition(Transform[] m_Targets) {
