@@ -41,7 +41,7 @@ namespace Complete {
 
             Ray ray = m_Camera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-            if (Physics.Raycast(ray, out hit)) {
+            if (Physics.Raycast(ray, out hit, float.MaxValue, LayerMask.GetMask("Ground"))) {
                 offset = player.transform.position - hit.point;
                 offset.y = 0;
                 offset = Vector3.ClampMagnitude(offset, distanceThreshold);

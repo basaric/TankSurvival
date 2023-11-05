@@ -66,7 +66,7 @@ public class TankPlayerController : MonoBehaviour
     private void pointerAim() {
         Ray ray = cameraMain.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit)) {
+        if (Physics.Raycast(ray, out hit, float.MaxValue, LayerMask.GetMask("Ground"))) {
             if (tankMovement != null) {
                 tankMovement.aimAt(hit.point);
             } else {

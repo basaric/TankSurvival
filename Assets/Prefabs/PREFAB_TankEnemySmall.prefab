@@ -38,6 +38,16 @@ PrefabInstance:
       propertyPath: m_Constraints
       value: 80
       objectReference: {fileID: 0}
+    - target: {fileID: 4512227698925570125, guid: c8b2bcefe9e945246b01cce7d136b1b0,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 2.79
+      objectReference: {fileID: 0}
+    - target: {fileID: 4512227698925570125, guid: c8b2bcefe9e945246b01cce7d136b1b0,
+        type: 3}
+      propertyPath: m_Center.y
+      value: 1.37
+      objectReference: {fileID: 0}
     - target: {fileID: 4512227698927657297, guid: c8b2bcefe9e945246b01cce7d136b1b0,
         type: 3}
       propertyPath: m_Name
