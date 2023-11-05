@@ -63,10 +63,4 @@ public class TankEnemyController : MonoBehaviour
             agent.SetDestination(navHit.position);
         }
     }
-    protected Vector3 getRandomOffset(Vector3 position, float radius) {
-        Vector3 offset = UnityEngine.Random.onUnitSphere;
-        offset.y = 0;
-        offset = offset.normalized * radius;
-        return position + offset;
-    }
 }

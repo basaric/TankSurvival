@@ -12,6 +12,10 @@ public class EnemyBasic : TankEnemyController {
     [Range(6f, 18f)]
     public float radius = 20f;
 
+    void OnDestroy() {
+        CancelInvoke("shootTimer");
+        CancelInvoke("moveTimer");
+    }
     protected override void Start() {
         base.Start();
         Invoke("shootTimer", Random.Range(shootIntervalMin, shootIntervalMax));
@@ -23,7 +27,7 @@ public class EnemyBasic : TankEnemyController {
     }
     private void moveTimer() {
         if (player != null) {
-            setDestination(getRandomOffset(player.transform.position, radius));
+            setDestination(Utils.getRandomOffsetInRadius(player.transform.position, radius));
         }
     }
 }

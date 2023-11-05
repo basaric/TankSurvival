@@ -16,4 +16,10 @@ public class Utils {
         newRotation.z = 0;
         transform.rotation = newRotation;
     }
+    public static Vector3 getRandomOffsetInRadius(Vector3 position, float radius) {
+        Vector3 offset = UnityEngine.Random.onUnitSphere;
+        offset.y = 0;
+        offset = offset.normalized * radius;
+        return position + offset;
+    }
 }
